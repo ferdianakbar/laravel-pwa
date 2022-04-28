@@ -1,5 +1,5 @@
 const mix = require('laravel-mix');
-
+require('laravel-mix-workbox');
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -11,9 +11,18 @@ const mix = require('laravel-mix');
  |
  */
 
+const workboxCfg = {
+    swSrc: './resources/js/sw.js'
+}
+
+if(!mix.inProduction()) {
+    workboxCfg.maximumFileSizeToCacheInBytes = 10 * 1024 * 1024
+}
+
 mix.js('resources/js/app.js', 'public/js')
     .vue()
     .sass('resources/sass/app.scss', 'public/css').options({
         processCssUrls: false
     })
+    .injectManifest(workboxCfg)
     .sourceMaps();

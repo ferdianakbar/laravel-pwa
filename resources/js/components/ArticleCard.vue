@@ -1,11 +1,14 @@
 <template>
     <div class="col">
-        <div class="card mb-4">
+        <div class="card mb-4" :class="[ $root.darkMode ? 'bg-dark' :'']">
             <div class="card-body">
                 <div class="small text-muted">{{ getPublishDate }}</div>
                 <h2 class="card-title h4">{{ title }}</h2>
                 <p class="card-text">{{ shortDescription }}</p>
-                <router-link :to="{name: 'article', params: {id: id}}" class="btn btn-primary">Read more →</router-link>
+                <router-link class="btn"
+                             :to="{name: 'article', params: {id: id}}"
+                             :class="[ $root.darkMode ? 'btn-secondary' :'btn-primary']"
+                >Read more →</router-link>
             </div>
         </div>
     </div>

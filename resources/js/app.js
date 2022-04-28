@@ -19,14 +19,48 @@ const app = Vue.createApp({
     data() {
         return {
             siteName: '',
-            loggedIn: false
+            loggedIn: false,
+            darkMode: false
         }
     },
     mounted() {
-        //set the sitename
+        //set the site name
         let rootContainer = $(this.$el.parentNode);
         this.siteName = rootContainer.data('site-name');
+        let localDarkMode = localStorage.getItem("darkMode");
+
+        if(localDarkMode == null) {
+            localStorage.setItem("darkMode", false);
+        } else {
+            this.darkMode = localDarkMode;
+            if(localDarkMode === 'true') {
+                this.toDarkMode();
+            }else if (localDarkMode === 'false'){
+                this.toLightMode();
+            }
+        }
+
         checkToken(this);
+    },
+    methods: {
+        toDarkMode: function () {
+            this.darkMode = true;
+            $("body").css({
+                'background-color': '#000',
+                'color': '#fff'
+            });
+
+            localStorage.setItem("darkMode", true);
+        },
+        toLightMode: function () {
+            $("body").css({
+                'background-color': '',
+                'color': ''
+            });
+
+            this.darkMode = false;
+            localStorage.setItem("darkMode", false);
+        },
     }
 });
 
